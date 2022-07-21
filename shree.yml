@@ -1,0 +1,30 @@
+- name: Create a virtual machine on given ESXi hostname
+  vmware_guest:
+    hostname: "https://nxtvcenter.nxtsandbox.local/"
+    username: "administrator@vsphere.local"
+    password: "Aspirenxt@12299"
+    validate_certs: no
+    folder: KL-Datacenter/NXT-Cluster/CTC_RWS_ANSIBLE/
+    name: testshree
+    #state: 
+    guest_id: rhel-8.4-x86_64 
+    # This is hostname of particular ESXi server on which user wants VM to be deployed
+    esxi_hostname: "ESXi 6.7 and later"
+    disk:
+    - size_gb: 16
+      type: thick
+      datastore: datastore1
+    hardware:
+      memory_mb: 400
+      num_cpus: 4
+      scsi: paravirtual
+    networks:
+    - name: VM-Network
+      mac: aa:bb:dd:aa:00:14
+      ip: 10.10.10.100
+      netmask: 255.255.255.0
+      device_type: vmxnet3
+    wait_for_ip_address: yes
+  delegate_to: localhost
+  register: deploy_vm
+
